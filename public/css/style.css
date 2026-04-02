@@ -475,11 +475,14 @@ input::placeholder, textarea::placeholder { color: var(--text-dim); }
 .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
 .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
 @keyframes bounce { 0%, 60%, 100% { transform: translateY(0); } 30% { transform: translateY(-5px); } }
+/* Toggle icon swap via class */
+.chat-toggle .chat-icon--open  { display: block; }
+.chat-toggle .chat-icon--close { display: none;  }
+.chat-toggle--open .chat-icon--open  { display: none;  }
+.chat-toggle--open .chat-icon--close { display: block; }
+
 .chat-input-area { border-top: 1px solid var(--border); }
-.chat-provider { display: flex; gap: 1rem; padding: 0.5rem 1rem 0.25rem; }
-.chat-provider__label { display: flex; align-items: center; gap: 4px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; }
-.chat-provider__label input { width: auto; margin: 0; }
-.chat-input-row { display: flex; align-items: flex-end; gap: 8px; padding: 0.5rem 1rem 0.85rem; }
+.chat-input-row { display: flex; align-items: flex-end; gap: 8px; padding: 0.75rem 1rem; }
 .chat-input {
   flex:          1;
   background:    var(--surface);

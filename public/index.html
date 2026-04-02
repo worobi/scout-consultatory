@@ -315,12 +315,12 @@
     </div>
   </footer>
 
-  <!-- ══ AI CHAT WIDGET ═════════════════════════════════════════ -->
+  <!-- ══ CHAT WIDGET ═══════════════════════════════════════════ -->
   <div class="chat-widget" id="chatWidget">
     <!-- Toggle button -->
-    <button class="chat-toggle" id="chatToggle" aria-label="Open AI chat">
-      <svg class="chat-toggle__icon chat-toggle__icon--open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-      <svg class="chat-toggle__icon chat-toggle__icon--close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" hidden><path d="M18 6L6 18M6 6l12 12"/></svg>
+    <button class="chat-toggle" id="chatToggle" aria-label="Open chat">
+      <svg class="chat-icon--open" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      <svg class="chat-icon--close" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none"><path d="M18 6L6 18M6 6l12 12"/></svg>
       <span class="chat-toggle__badge">AI</span>
     </button>
 
@@ -330,30 +330,22 @@
         <div class="chat-header__info">
           <div class="chat-header__avatar">▲</div>
           <div>
-            <div class="chat-header__name">Scout AI</div>
-            <div class="chat-header__status" id="chatStatus">Online · Powered by AI</div>
+            <div class="chat-header__name">Scout Assistant</div>
+            <div class="chat-header__status">Online · Ask us anything</div>
           </div>
         </div>
-        <button class="chat-header__close" id="chatClose" aria-label="Close chat">×</button>
+        <button class="chat-header__close" id="chatClose" type="button" aria-label="Close chat">×</button>
       </div>
 
       <div class="chat-messages" id="chatMessages">
         <div class="chat-msg chat-msg--bot">
           <div class="chat-msg__bubble">
-            Hey — I'm Scout's AI assistant. Ask me anything about what we do, how we work, or whether we can help with your situation.
+            Hey — I'm Scout's assistant. Ask me anything about what we do, how we work, or whether we can help with your situation.
           </div>
         </div>
       </div>
 
       <div class="chat-input-area">
-        <div class="chat-provider" id="chatProviderWrap">
-          <label class="chat-provider__label">
-            <input type="radio" name="provider" value="openai" checked /> GPT
-          </label>
-          <label class="chat-provider__label">
-            <input type="radio" name="provider" value="claude" /> Claude
-          </label>
-        </div>
         <div class="chat-input-row">
           <textarea
             class="chat-input"
