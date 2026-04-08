@@ -1,6 +1,6 @@
 /**
  * Scout Consultatory – Main Frontend JS
- * Chat widget + Lead form + Nav behavior
+ * Nav behavior + Lead form + Services fallback
  */
 
 (function () {
@@ -39,12 +39,12 @@
       })
       .catch(() => {
         servicesGrid.innerHTML = [
-          ['🔍','Root Cause Audit','AI-assisted analysis that maps your real operations and traces every issue back to why it exists — not just what it looks like.'],
-          ['📋','Compliance Gap Analysis','Structured review across OSHA, data privacy, HR documentation, HIPAA, and operational policy — with root cause context for every gap found.'],
-          ['⚙️','Process & Workflow Redesign','Rebuild the processes that are slowing you down. SOPs, workflow automation, and tool configuration built around what the audit actually found.'],
-          ['🔗','System & Tool Integration','Get your CRM, ops tools, and communications platforms working as one unified system — configured around your real workflows.'],
-          ['🤖','AI Adoption','Practical AI implementation — not hype. Deploy tools that accelerate diagnosis, reduce manual work, and improve output in ways you can measure.'],
-          ['📊','Fractional CTO','Senior tech and operations leadership without the full-time cost. Strategy, oversight, and execution — scoped to what you actually need.'],
+          ['🔍','Root Cause Audit','Structured review of your operations, compliance posture, and process efficacy — traced to root cause, not just flagged on a list.'],
+          ['📋','Compliance Gap Analysis','Identify exposure across OSHA, data privacy, HR documentation, HIPAA, and operational policy — before a regulator does it for you.'],
+          ['⚙️','Process & Workflow Redesign','Rebuild the processes that are slowing you down. SOPs, workflow corrections, and tool configuration built around what the audit actually found.'],
+          ['🔗','System & Tool Integration','Get your CRM, ops tools, and communications platforms working together — configured around your real workflows, not a generic setup.'],
+          ['📊','Fractional CTO','Senior operations and technology leadership without the full-time cost. Strategy, oversight, and hands-on execution scoped to what you need.'],
+          ['🏭','All Industries','Healthcare, logistics, construction, retail, professional services, property management — the methodology adapts to what your industry requires.'],
         ].map(([icon, title, desc]) => `
           <div class="service-card">
             <span class="service-card__icon">${icon}</span>
@@ -105,165 +105,5 @@
       }
     });
   }
-
-  // ── Chat widget ───────────────────────────────────────────────
-  const chatToggle   = document.getElementById('chatToggle');
-  const chatClose    = document.getElementById('chatClose');
-  const chatPanel    = document.getElementById('chatPanel');
-  const chatInput    = document.getElementById('chatInput');
-  const chatSend     = document.getElementById('chatSend');
-  const chatMessages = document.getElementById('chatMessages');
-
-  if (!chatToggle || !chatPanel) return;
-
-  let isOpen         = false;
-  let chatHistory    = [];
-  let isSending      = false;
-  let transcriptSent = false;
-
-  // ── Open / close ──────────────────────────────────────────────
-  function openChat() {
-    isOpen = true;
-    chatPanel.removeAttribute('hidden');
-    chatPanel.classList.add('chat-panel--visible');
-    chatToggle.classList.add('chat-toggle--open');
-    if (chatInput) setTimeout(() => chatInput.focus(), 50);
-    scrollBottom();
-  }
-
-  function closeChat() {
-    isOpen = false;
-    chatPanel.setAttribute('hidden', '');
-    chatPanel.classList.remove('chat-panel--visible');
-    chatToggle.classList.remove('chat-toggle--open');
-    sendTranscriptOnClose();
-  }
-
-  chatToggle.addEventListener('click', (e) => {
-    e.stopPropagation();
-    isOpen ? closeChat() : openChat();
-  });
-
-  // Close button inside panel header
-  if (chatClose) {
-    chatClose.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeChat();
-    });
-  }
-
-  // Close on outside click
-  document.addEventListener('click', (e) => {
-    if (isOpen && !chatPanel.contains(e.target) && !chatToggle.contains(e.target)) {
-      closeChat();
-    }
-  });
-
-  // Close on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && isOpen) closeChat();
-  });
-
-  // ── Input handlers ────────────────────────────────────────────
-  if (chatInput) {
-    chatInput.addEventListener('input', () => {
-      chatInput.style.height = 'auto';
-      chatInput.style.height = Math.min(chatInput.scrollHeight, 100) + 'px';
-    });
-    chatInput.addEventListener('keydown', (e) => {
-      if (e.key === 'Enter' && !e.shiftKey) {
-        e.preventDefault();
-        sendMessage();
-      }
-    });
-  }
-
-  if (chatSend) chatSend.addEventListener('click', sendMessage);
-
-  // ── Message rendering ─────────────────────────────────────────
-  function appendMessage(role, text) {
-    const el = document.createElement('div');
-    el.className = `chat-msg chat-msg--${role === 'user' ? 'user' : 'bot'}`;
-    el.innerHTML = `<div class="chat-msg__bubble">${esc(text)}</div>`;
-    chatMessages.appendChild(el);
-    scrollBottom();
-  }
-
-  function showTyping() {
-    const el = document.createElement('div');
-    el.className = 'chat-msg chat-msg--bot chat-msg--typing';
-    el.id = 'typingIndicator';
-    el.innerHTML = `<div class="chat-msg__bubble"><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
-    chatMessages.appendChild(el);
-    scrollBottom();
-  }
-
-  function hideTyping() {
-    const el = document.getElementById('typingIndicator');
-    if (el) el.remove();
-  }
-
-  function scrollBottom() {
-    if (chatMessages) chatMessages.scrollTop = chatMessages.scrollHeight;
-  }
-
-  function esc(str) {
-    return String(str)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-      .replace(/>/g,'&gt;').replace(/"/g,'&quot;')
-      .replace(/\n/g,'<br>');
-  }
-
-  // ── Send message ──────────────────────────────────────────────
-  async function sendMessage() {
-    if (isSending) return;
-    const text = (chatInput.value || '').trim();
-    if (!text) return;
-
-    chatInput.value = '';
-    chatInput.style.height = 'auto';
-    isSending = true;
-    if (chatSend) chatSend.disabled = true;
-
-    appendMessage('user', text);
-    chatHistory.push({ role: 'user', content: text });
-    showTyping();
-
-    try {
-      const res  = await fetch('/api/chat', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body:    JSON.stringify({ messages: chatHistory }),
-      });
-      const data = await res.json();
-      hideTyping();
-
-      const reply = data.reply || "Something went wrong on my end. Try the contact form or email Brandon@scoutconsultatory.com directly.";
-      appendMessage('bot', reply);
-      chatHistory.push({ role: 'assistant', content: reply });
-
-    } catch (_) {
-      hideTyping();
-      appendMessage('bot', 'Network issue. Try the contact form or email Brandon@scoutconsultatory.com directly.');
-    } finally {
-      isSending = false;
-      if (chatSend) chatSend.disabled = false;
-      if (chatInput) chatInput.focus();
-    }
-  }
-
-  // ── Send transcript when chat closes ──────────────────────────
-  function sendTranscriptOnClose() {
-    if (transcriptSent || chatHistory.length < 2) return;
-    transcriptSent = true;
-    fetch('/api/chat/transcript', {
-      method:  'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body:    JSON.stringify({ messages: chatHistory }),
-    }).catch(() => {});
-  }
-
-  // Also send transcript on page unload
-  window.addEventListener('beforeunload', sendTranscriptOnClose);
 
 })();
