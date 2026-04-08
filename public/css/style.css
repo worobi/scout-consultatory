@@ -219,6 +219,12 @@ ul { list-style: none; }
   background:   linear-gradient(135deg, rgba(59,130,246,0.1), var(--surface));
   box-shadow:   0 0 30px rgba(59,130,246,0.15);
 }
+.tier-price {
+  font-size:   1rem;
+  font-weight: 700;
+  color:       var(--accent-2);
+  margin:      0.75rem 0 1rem;
+}
 .tier-card__badge {
   font-size:   0.7rem;
   font-weight: 700;

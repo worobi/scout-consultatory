@@ -39,12 +39,12 @@
       })
       .catch(() => {
         servicesGrid.innerHTML = [
-          ['🖥️','IT Consulting','Assess, plan, and fix your tech stack. No jargon, just clear recommendations.'],
-          ['🌐','Web Development & Hosting','Fast, modern sites built to convert — not just look good.'],
-          ['⚙️','Workflow Automation','Eliminate repetitive manual work. Connect your tools so they talk to each other.'],
-          ['🔗','CRM & Integrations','Get your CRM, email, calendar, and ops tools working as one unified system.'],
-          ['📊','Fractional CTO','Senior tech leadership without the full-time cost. Strategy, oversight, execution.'],
-          ['🤖','AI Adoption','Practical AI — not hype. Deploy tools that actually reduce work and improve output.'],
+          ['🔍','Root Cause Audit','AI-assisted analysis that maps your real operations and traces every issue back to why it exists — not just what it looks like.'],
+          ['📋','Compliance Gap Analysis','Structured review across OSHA, data privacy, HR documentation, HIPAA, and operational policy — with root cause context for every gap found.'],
+          ['⚙️','Process & Workflow Redesign','Rebuild the processes that are slowing you down. SOPs, workflow automation, and tool configuration built around what the audit actually found.'],
+          ['🔗','System & Tool Integration','Get your CRM, ops tools, and communications platforms working as one unified system — configured around your real workflows.'],
+          ['🤖','AI Adoption','Practical AI implementation — not hype. Deploy tools that accelerate diagnosis, reduce manual work, and improve output in ways you can measure.'],
+          ['📊','Fractional CTO','Senior tech and operations leadership without the full-time cost. Strategy, oversight, and execution — scoped to what you actually need.'],
         ].map(([icon, title, desc]) => `
           <div class="service-card">
             <span class="service-card__icon">${icon}</span>
@@ -96,7 +96,7 @@
         formStatus.hidden = false;
       } catch (_) {
         formStatus.className   = 'form-status form-status--error';
-        formStatus.textContent = 'Network error. Please email Brandon@worobi.com directly.';
+        formStatus.textContent = 'Network error. Please email Brandon@scoutconsultatory.com directly.';
         formStatus.hidden      = false;
       } finally {
         btnText.textContent = 'Send It';
@@ -238,13 +238,13 @@
       const data = await res.json();
       hideTyping();
 
-      const reply = data.reply || "Something went wrong on my end. Try the contact form or email Brandon@worobi.com directly.";
+      const reply = data.reply || "Something went wrong on my end. Try the contact form or email Brandon@scoutconsultatory.com directly.";
       appendMessage('bot', reply);
       chatHistory.push({ role: 'assistant', content: reply });
 
     } catch (_) {
       hideTyping();
-      appendMessage('bot', 'Network issue. Try the contact form or email Brandon@worobi.com directly.');
+      appendMessage('bot', 'Network issue. Try the contact form or email Brandon@scoutconsultatory.com directly.');
     } finally {
       isSending = false;
       if (chatSend) chatSend.disabled = false;
