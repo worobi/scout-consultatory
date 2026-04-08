@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 60" width="60" height="60" role="img" aria-label="Scout Consultatory Icon">
+
+  <!-- Background -->
+  <rect width="60" height="60" rx="10" fill="#0c1525"/>
+
+  <!-- Compass Mark — centered at 30,30 -->
+  <g transform="translate(30,30)">
+
+    <!-- Outer ring -->
+    <circle r="21" fill="none" stroke="#C9A84C" stroke-width="1.1" opacity="0.65"/>
+
+    <!-- Diagonal ticks -->
+    <line x1="14.3"  y1="-14.3" x2="10.6"  y2="-10.6" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.45"/>
+    <line x1="14.3"  y1="14.3"  x2="10.6"  y2="10.6"  stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.45"/>
+    <line x1="-14.3" y1="14.3"  x2="-10.6" y2="10.6"  stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.45"/>
+    <line x1="-14.3" y1="-14.3" x2="-10.6" y2="-10.6" stroke="#C9A84C" stroke-width="0.9" stroke-linecap="round" opacity="0.45"/>
+
+    <!-- Cardinal arms -->
+    <line x1="0"   y1="-21" x2="0"   y2="-10" stroke="#C9A84C" stroke-width="1.4" stroke-linecap="round"/>
+    <line x1="0"   y1="10"  x2="0"   y2="21"  stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+    <line x1="10"  y1="0"   x2="21"  y2="0"   stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+    <line x1="-21" y1="0"   x2="-10" y2="0"   stroke="#C9A84C" stroke-width="1.1" stroke-linecap="round" opacity="0.55"/>
+
+    <!-- North pointer -->
+    <polygon points="0,-10  3.8,-3  0,0  -3.8,-3" fill="#C9A84C"/>
+
+    <!-- South pointer (dim) -->
+    <polygon points="0,10  2.5,5  0,2.5  -2.5,5" fill="#C9A84C" opacity="0.32"/>
+
+    <!-- Inner ring -->
+    <circle r="4.2" fill="none" stroke="#C9A84C" stroke-width="0.8" opacity="0.35"/>
+
+    <!-- Center dot -->
+    <circle r="1.8" fill="#C9A84C"/>
+
+  </g>
+
+</svg>

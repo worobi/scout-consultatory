@@ -14,6 +14,19 @@
     }, { passive: true });
   }
 
+  // ── Active nav link ───────────────────────────────────────────
+  const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+  document.querySelectorAll('.nav__links a, .footer__nav a').forEach(a => {
+    const href = a.getAttribute('href');
+    if (!href) return;
+    const linkPath = href.replace(/\/$/, '') || '/';
+    if (linkPath === currentPath ||
+        (currentPath === '/' && (linkPath === '/index.html' || linkPath === '')) ||
+        (currentPath.endsWith('index.html') && linkPath === '/')) {
+      a.classList.add('active');
+    }
+  });
+
   // ── Mobile nav ────────────────────────────────────────────────
   const navToggle = document.getElementById('navToggle');
   const navLinks  = document.getElementById('navLinks');
@@ -96,7 +109,7 @@
         formStatus.hidden = false;
       } catch (_) {
         formStatus.className   = 'form-status form-status--error';
-        formStatus.textContent = 'Network error. Please email Brandon@scoutconsultatory.com directly.';
+        formStatus.textContent = 'Network error. Please email Leadscout@Scoutconsultatory.com directly.';
         formStatus.hidden      = false;
       } finally {
         btnText.textContent = 'Send It';
