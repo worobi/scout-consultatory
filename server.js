@@ -19,6 +19,11 @@ const apiRouter   = require('./routes/api');
 const app  = express();
 const PORT = process.env.PORT || 3000;
 
+// Traefik is the only proxy hop in front of this container. Trusting exactly
+// one hop lets rate limiting use the visitor IP instead of grouping all
+// traffic under Traefik's Docker-network address.
+app.set('trust proxy', 1);
+
 // ── Security & middleware ─────────────────────────────────────
 app.use(helmet({
   contentSecurityPolicy: {
