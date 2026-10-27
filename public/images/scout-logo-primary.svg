@@ -5,8 +5,6 @@
     </style>
   </defs>
 
-  <!-- Background -->
-  <rect width="300" height="84" rx="0" fill="#0c1525"/>
 
   <!-- ═══════════════════════════════════════
        COMPASS MARK  ·  centered at (42, 42)

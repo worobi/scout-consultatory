@@ -896,3 +896,22 @@ input, textarea, select { font-size: 1rem; }
 .section-header .report-offer__prices { margin-top: 1.25rem; color: var(--accent-2); font-weight: 600; }
 .report-offer__terms { max-width: 760px; margin: 2rem auto 0; text-align: center; }
 @media (max-width: 768px) { .report-options { grid-template-columns: 1fr; } }
+
+/* Services journey: process, report choices, implementation, then method. */
+.services-page .page-header { padding-bottom: 2.5rem; }
+.services-page .services-process { padding-top: 3rem; padding-bottom: 3rem; }
+.services-page .services-process .section-header { margin-bottom: 2rem; }
+.services-page .services-process .step { text-align: left; }
+.services-page .report-discount { color: var(--accent-2); font-weight: 600; }
+.services-page .report-discount a { padding: .25rem; text-decoration: underline; }
+.services-page .report-discount-note { max-width: 760px; margin: 1.5rem auto 2rem; text-align: center; font-size: .9rem; }
+.services-process__timing { text-align: center; margin: 2rem 0 0; }
+.services-page .report-options { align-items: stretch; }
+.services-page .tiers__grid { align-items: stretch; }
+.services-page .tier-card { display: flex; flex-direction: column; }
+.services-page .tier-card .btn { margin-top: auto; align-self: flex-start; }
+.services-page .report-offer, .services-page .tiers { padding-top: 4rem; padding-bottom: 4rem; }
+@media (max-width: 768px) {
+  .services-page .report-offer, .services-page .tiers { padding-top: 3rem; padding-bottom: 3rem; }
+  .services-page .services-process .step { width: 100%; }
+}

@@ -21,7 +21,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/css/style.css" />
 </head>
-<body>
+<body class="services-page">
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ══ NAVIGATION ════════════════════════════════════════════ -->
@@ -47,15 +47,45 @@
   <header class="page-header">
     <div class="container">
       <span class="overline">What We Do</span>
-      <h1>Services &amp; Engagement Tiers</h1>
+      <h1>From findings to action.</h1>
       <p>A Scout Report is required before implementation. From there, choose the level of support that fits the findings.</p>
     </div>
   </header>
 
+  <section class="how services-process" id="how">
+    <div class="container">
+      <div class="section-header">
+        <span class="overline">The Process</span>
+        <h2>How It Works</h2>
+        <div class="accent-rule"></div>
+        <p>Start with a Scout Report. Understand the findings, then decide how to put them to work.</p>
+      </div>
+      <div class="how__steps">
+        <div class="step">
+          <div class="step__num">01</div><h3>Choose your report</h3>
+          <p>Focused covers one core workflow or operational problem. Comprehensive reviews up to three connected workflows.</p>
+          <a href="#scout-report">Compare the reports →</a>
+        </div>
+        <div class="step__arrow" aria-hidden="true">→</div>
+        <div class="step">
+          <div class="step__num">02</div><h3>Review the findings together</h3>
+          <p>Understand the root causes and your priorities. Both reports include practical next steps and a walkthrough of the findings.</p>
+        </div>
+        <div class="step__arrow" aria-hidden="true">→</div>
+        <div class="step">
+          <div class="step__num">03</div><h3>Choose how to move forward</h3>
+          <p>Use the recommendations independently or work with Scout. Implementation is scoped separately, with no ongoing engagement required.</p>
+          <a href="#tiers">Explore implementation support →</a>
+        </div>
+      </div>
+      <p class="services-process__timing">Timing is quoted individually based on each project’s scope.</p>
+    </div>
+  </section>
+
   <section class="services report-offer" id="scout-report">
     <div class="container">
       <div class="section-header">
-        <span class="overline">The Scout Report</span>
+        <span class="overline">Start Here · The Scout Report</span>
         <h2>Find what’s slowing your business down—and what to do about it.</h2>
         <div class="accent-rule"></div>
         <p>The Scout Report is a structured review of your operations. We map workflows, flag potential compliance gaps, and trace inefficiencies to their root causes. Choose a focused review of one problem area or a broader assessment of how your systems and processes work together.</p>
@@ -81,6 +111,73 @@
           <a href="/contact.html?service=Scout%20Report%20%E2%80%94%20Comprehensive" class="btn btn--primary">Request a Comprehensive Report →</a>
         </article></div>
       <div class="report-offer__terms"><p><strong>Both reports are one-time purchases with no ongoing engagement required. You can use the recommendations independently or work with Scout to implement them. Implementation is scoped separately.</strong></p><p>A Scout Report is required before implementation. Existing assessments can inform the review, but do not replace Scout’s own evaluation.</p><p>Timing is quoted individually based on each project’s scope.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ SERVICE TIERS ═════════════════════════════════════════ -->
+  <section class="tiers" id="tiers">
+    <div class="container">
+      <div class="section-header">
+        <span class="overline">After Your Report · Implementation</span>
+        <h2>Put the findings to work.</h2>
+        <div class="accent-rule"></div>
+        <p>Your report identifies the priorities. These implementation tiers provide support for addressing them, from targeted fixes to broader operational work. A Scout Report is required first, and implementation is scoped separately.</p>
+      </div>
+      <div class="tiers__grid">
+        <div class="tier-card tier-card--1">
+          <div class="tier-card__badge">Tier 1 · Fix</div>
+          <h3>Remediate</h3>
+          <p>Targeted fixes for your highest-priority root causes. Scoped, focused, and fast.</p>
+          <ul>
+            <li>SOPs &amp; process corrections</li>
+            <li>Compliance documentation</li>
+            <li>Quick-win workflow improvements</li>
+            <li>Tech tool configuration</li>
+          </ul>
+          <p class="tier-price">$1,500 – $3,000</p><p class="report-discount">10% off your Scout Report<a href="#report-discount-note" aria-label="Report discount details">*</a></p>
+          <a href="/contact.html?service=Tier%201%20Remediate" class="btn btn--outline btn--sm">Ask About Remediate</a>
+        </div>
+        <div class="tier-card tier-card--2 tier-card--featured">
+          <div class="tier-card__badge">Tier 2 · Optimize</div>
+          <div class="tier-card__popular">Most Common</div>
+          <h3>Rebuild</h3>
+          <p>Broader remediation across operations, compliance, and technology — built around root cause, not surface symptoms.</p>
+          <ul>
+            <li>Process redesign</li>
+            <li>Policy &amp; compliance build-out</li>
+            <li>System integrations</li>
+            <li>Workflow automation</li>
+          </ul>
+          <p class="tier-price">$3,000 – $6,000</p><p class="report-discount">25% off your Scout Report<a href="#report-discount-note" aria-label="Report discount details">*</a></p>
+          <a href="/contact.html?service=Tier%202%20Rebuild" class="btn btn--primary btn--sm">Ask About Rebuild</a>
+        </div>
+        <div class="tier-card tier-card--3">
+          <div class="tier-card__badge">Tier 3 · Full Overhaul</div>
+          <h3>Transform</h3>
+          <p>End-to-end operational and compliance overhaul. Nothing patched. Everything rebuilt with ongoing monitoring built in.</p>
+          <ul>
+            <li>Full ops &amp; compliance rebuild</li>
+            <li>Custom monitoring &amp; reporting</li>
+            <li>Ongoing efficacy tracking</li>
+            <li>Fractional CTO support</li>
+          </ul>
+          <p class="tier-price">$6,000+</p><p class="report-discount">50% off your Scout Report<a href="#report-discount-note" aria-label="Report discount details">*</a></p>
+          <a href="/contact.html?service=Tier%203%20Transform" class="btn btn--outline btn--sm">Ask About Transform</a>
+        </div>
+      </div>
+      <p id="report-discount-note" class="report-discount-note">*Report discount is applied at the time of selecting an implementation tier: Fix 10%, Optimize 25%, Full Overhaul 50%. Applies to the report price—either the $750 Focused Report or the $1,500 Comprehensive Report—not the implementation price.</p>
+      <div class="tiers__options">
+        <div class="tiers__option-item">
+          <strong>Custom Solutions</strong>
+          <span>Doesn't fit a tier? We scope it around what you actually need.</span>
+          <a href="/contact.html?service=Custom%20Solutions">Talk to Our Lead Scout →</a>
+        </div>
+        <div class="tiers__option-divider"></div>
+        <div class="tiers__option-item">
+          <strong>Post-Engagement Continuity</strong>
+          <span>Protect what we built. Ongoing monitoring &amp; compliance support from $299–$799/mo after any completed engagement.</span>
+        </div>
       </div>
     </div>
   </section>
@@ -147,106 +244,6 @@
             <li>Remediation results and improvement verification</li>
           </ul>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ SERVICE TIERS ═════════════════════════════════════════ -->
-  <section class="tiers" id="tiers">
-    <div class="container">
-      <div class="section-header">
-        <span class="overline">Engagement Tiers</span>
-        <h2>Choose the Level That Fits What You're Dealing With.</h2>
-        <div class="accent-rule"></div>
-        <p>A Scout Report is required before implementation. Existing assessments can inform the review, but do not replace Scout’s own evaluation. The findings guide the recommended implementation tier.</p>
-      </div>
-      <div class="tiers__grid">
-        <div class="tier-card tier-card--1">
-          <div class="tier-card__badge">Tier 1</div>
-          <h3>Remediate</h3>
-          <p>Targeted fixes for your highest-priority root causes. Scoped, focused, and fast.</p>
-          <ul>
-            <li>SOPs &amp; process corrections</li>
-            <li>Compliance documentation</li>
-            <li>Quick-win workflow improvements</li>
-            <li>Tech tool configuration</li>
-          </ul>
-          <p class="tier-price">$1,500 – $3,000</p>
-          <a href="/contact.html?service=Tier%201%20Remediate" class="btn btn--outline btn--sm">Ask About Remediate</a>
-        </div>
-        <div class="tier-card tier-card--2 tier-card--featured">
-          <div class="tier-card__badge">Tier 2</div>
-          <div class="tier-card__popular">Most Common</div>
-          <h3>Rebuild</h3>
-          <p>Broader remediation across operations, compliance, and technology — built around root cause, not surface symptoms.</p>
-          <ul>
-            <li>Process redesign</li>
-            <li>Policy &amp; compliance build-out</li>
-            <li>System integrations</li>
-            <li>Workflow automation</li>
-          </ul>
-          <p class="tier-price">$3,000 – $6,000</p>
-          <a href="/contact.html?service=Tier%202%20Rebuild" class="btn btn--primary btn--sm">Ask About Rebuild</a>
-        </div>
-        <div class="tier-card tier-card--3">
-          <div class="tier-card__badge">Tier 3</div>
-          <h3>Transform</h3>
-          <p>End-to-end operational and compliance overhaul. Nothing patched. Everything rebuilt with ongoing monitoring built in.</p>
-          <ul>
-            <li>Full ops &amp; compliance rebuild</li>
-            <li>Custom monitoring &amp; reporting</li>
-            <li>Ongoing efficacy tracking</li>
-            <li>Fractional CTO support</li>
-          </ul>
-          <p class="tier-price">$6,000+</p>
-          <a href="/contact.html?service=Tier%203%20Transform" class="btn btn--outline btn--sm">Ask About Transform</a>
-        </div>
-      </div>
-      <div class="tiers__options">
-        <div class="tiers__option-item">
-          <strong>Custom Solutions</strong>
-          <span>Doesn't fit a tier? We scope it around what you actually need.</span>
-          <a href="/contact.html?service=Custom%20Solutions">Talk to Our Lead Scout →</a>
-        </div>
-        <div class="tiers__option-divider"></div>
-        <div class="tiers__option-item">
-          <strong>Post-Engagement Continuity</strong>
-          <span>Protect what we built. Ongoing monitoring &amp; compliance support from $299–$799/mo after any completed engagement.</span>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══ HOW IT WORKS ══════════════════════════════════════════ -->
-  <section class="how" id="how">
-    <div class="container">
-      <div class="section-header">
-        <span class="overline">The Process</span>
-        <h2>How It Works</h2>
-        <div class="accent-rule"></div>
-        <p>One clear entry point. A straightforward path. No drawn-out discovery phases or vague timelines.</p>
-      </div>
-      <div class="how__steps">
-        <div class="step">
-          <div class="step__num">01</div>
-          <h3>Request a Scout Report</h3>
-          <p>Complete a short intake form. We review your operations using a structured diagnostic process tailored to your industry, then deliver a findings report with root cause analysis and a prioritized remediation roadmap.</p>
-        </div>
-        <div class="step__arrow">→</div>
-        <div class="step">
-          <div class="step__num">02</div>
-          <h3>Choose Your Path</h3>
-          <p>Use the report yourself, bring it to another vendor, or move into a Scout engagement tier. The findings drive the recommendation — Remediate, Rebuild, or Transform — scoped to what the audit actually shows.</p>
-        </div>
-        <div class="step__arrow">→</div>
-        <div class="step">
-          <div class="step__num">03</div>
-          <h3>We Fix the Root Cause</h3>
-          <p>Every deliverable is actionable — SOPs, compliance documentation, rebuilt workflows, or integrated systems. The goal is that you don't need us back for the same problem.</p>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:3rem;">
-        <a href="/contact.html?service=Scout%20Report" class="btn btn--primary btn--lg">Request a Scout Report →</a>
       </div>
     </div>
   </section>
