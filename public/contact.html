@@ -4,17 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="index, follow" />
-  <meta name="description" content="Get in touch with Scout Consultatory. Order a Scout Report, inquire about engagement tiers, or reach out directly. Email: Leadscout@Scoutconsultatory.com" />
+  <meta name="description" content="Get in touch with Scout Consultatory. Request a Scout Report, inquire about engagement tiers, or reach out directly. Email: Leadscout@Scoutconsultatory.com" />
   <meta name="theme-color" content="#0c1525" />
   <link rel="canonical" href="https://scoutconsultatory.com/contact.html" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Scout Consultatory" />
   <meta property="og:title" content="Contact | Scout Consultatory" />
-  <meta property="og:description" content="Order a Scout Report or reach out to our Lead Scout. We respond within 24 hours, usually same-day." />
+  <meta property="og:description" content="Request a Scout Report or reach out to our Lead Scout. We respond within 24 hours, usually same-day." />
   <meta property="og:url" content="https://scoutconsultatory.com/contact.html" />
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Contact | Scout Consultatory" />
-  <meta name="twitter:description" content="Order a Scout Report or reach out to our Lead Scout. We respond within 24 hours, usually same-day." />
+  <meta name="twitter:description" content="Request a Scout Report or reach out to our Lead Scout. We respond within 24 hours, usually same-day." />
   <title>Contact | Scout Consultatory</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ══ NAVIGATION ════════════════════════════════════════════ -->
   <nav class="nav" id="nav">
@@ -29,24 +30,25 @@
       <a href="/" class="nav__logo" aria-label="Scout Consultatory — Home">
         <img src="/images/scout-logo-primary.svg" alt="Scout Consultatory" class="nav__logo-img" />
       </a>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+      <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
         <li><a href="/services.html">Services</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="https://scoutconsultatory.substack.com/" target="_blank" rel="noopener">Insights</a></li>
-        <li><a href="/contact.html" class="btn btn--sm btn--primary">Get Your Scout Report</a></li>
+        <li><a href="/contact.html?service=Scout%20Report" class="btn btn--sm btn--primary">Request a Scout Report</a></li>
       </ul>
     </div>
   </nav>
 
+  <main id="main" tabindex="-1">
   <!-- ══ PAGE HEADER ════════════════════════════════════════════ -->
   <header class="page-header">
     <div class="container">
       <span class="overline">Get Started</span>
-      <h1>Ready to Find the Root Cause?</h1>
-      <p>Start with a Scout Report or reach out to talk through what you need. You'll get a real response — not a sales pitch.</p>
+      <h1>Tell Us What You Need</h1>
+      <p>Use this form to request a Scout Report or ask about a service. This is an inquiry, not a purchase.</p>
     </div>
   </header>
 
@@ -54,11 +56,12 @@
   <section class="contact" id="contact">
     <div class="container">
       <div class="contact__inner">
-        <form class="contact-form" id="contactForm" novalidate>
+        <form class="contact-form" id="contactForm">
+          <p class="form-help">Fields marked * are required.</p>
           <div class="form-row form-row--2">
             <div class="form-group">
               <label for="name">Name <span class="required">*</span></label>
-              <input type="text" id="name" name="name" placeholder="Your name" required autocomplete="name" />
+              <input type="text" id="name" name="name" minlength="2" maxlength="100" placeholder="Your name" required autocomplete="name" />
             </div>
             <div class="form-group">
               <label for="email">Email <span class="required">*</span></label>
@@ -90,17 +93,19 @@
           </div>
           <div class="form-group">
             <label for="message">What's going on? <span class="required">*</span></label>
-            <textarea id="message" name="message" rows="5" placeholder="Give us a quick rundown — what's broken, what you want, or where you're stuck. Industry, size, urgency — the more context, the better." required></textarea>
+            <textarea id="message" name="message" minlength="10" maxlength="2000" aria-describedby="messageHelp" rows="5" placeholder="Give us a quick rundown — what's broken, what you want, or where you're stuck. Industry, size, urgency — the more context, the better." required></textarea>
+            <p id="messageHelp" class="form-help">10–2,000 characters.</p>
           </div>
           <div class="form-actions">
             <button type="submit" class="btn btn--primary btn--lg" id="submitBtn">
-              <span class="btn__text">Send It</span>
+              <span class="btn__text">Send Inquiry</span>
               <span class="btn__spinner" hidden>
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10" opacity="0.25"/><path d="M12 2a10 10 0 0 1 10 10" stroke-linecap="round"/></svg>
               </span>
             </button>
           </div>
-          <div id="formStatus" class="form-status" hidden></div>
+          <div id="formStatus" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1" hidden></div>
+        <noscript><p>Please enable JavaScript to use this form, or email <a href="mailto:Leadscout@Scoutconsultatory.com">Leadscout@Scoutconsultatory.com</a>.</p></noscript>
         </form>
         <div class="contact__info">
           <h3>Direct Contact</h3>
@@ -128,6 +133,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
   <footer class="footer">

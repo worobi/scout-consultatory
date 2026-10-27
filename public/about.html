@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ══ NAVIGATION ════════════════════════════════════════════ -->
   <nav class="nav" id="nav">
@@ -29,24 +30,25 @@
       <a href="/" class="nav__logo" aria-label="Scout Consultatory — Home">
         <img src="/images/scout-logo-primary.svg" alt="Scout Consultatory" class="nav__logo-img" />
       </a>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+      <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
         <li><a href="/services.html">Services</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="https://scoutconsultatory.substack.com/" target="_blank" rel="noopener">Insights</a></li>
-        <li><a href="/contact.html" class="btn btn--sm btn--primary">Get Your Scout Report</a></li>
+        <li><a href="/contact.html?service=Scout%20Report" class="btn btn--sm btn--primary">Request a Scout Report</a></li>
       </ul>
     </div>
   </nav>
 
+  <main id="main" tabindex="-1">
   <!-- ══ PAGE HEADER ════════════════════════════════════════════ -->
   <header class="page-header">
     <div class="container">
       <span class="overline">About Scout</span>
       <h1>Built on Operational Discipline.</h1>
-      <p>Veteran-led, certified, and built from real operational experience — not a business school thesis. This is what it looks like when the consultant has actually worked the problem.</p>
+      <p>Veteran-led, certified, and grounded in hands-on experience in operations, logistics, and IT.</p>
     </div>
   </header>
 
@@ -123,6 +125,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
   <footer class="footer">

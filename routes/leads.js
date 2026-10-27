@@ -89,7 +89,7 @@ Respond in JSON format only:
 
 // ── Send notification email ───────────────────────────────────
 async function sendLeadEmail(data, qualification) {
-  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) return;
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) throw new Error('Mail transport is not configured.');
 
   const transport = createTransporter();
   const qualHtml  = qualification ? `
@@ -102,7 +102,7 @@ async function sendLeadEmail(data, qualification) {
       Tone: ${qualification.tone}
     </div>` : '';
 
-  await transport.sendMail({
+  const result = await transport.sendMail({
     from:    `"Scout Consultatory Site" <${process.env.SMTP_USER}>`,
     to:      process.env.NOTIFY_EMAIL || process.env.SMTP_USER,
     subject: `New Lead: ${data.name} — ${qualification?.category || 'General Inquiry'}`,
@@ -121,11 +121,20 @@ async function sendLeadEmail(data, qualification) {
       </table>
     `,
   });
+  // SMTP acceptance only: this does not establish inbox delivery or reading.
+  if (!Array.isArray(result?.accepted) || result.accepted.length === 0) {
+    throw new Error('Mail transport did not confirm an accepted recipient.');
+  }
+  return result;
 }
 
 // ── Route: POST /api/leads ────────────────────────────────────
 router.post('/', leadLimit, async (req, res) => {
-  const { name, email, phone, business, service, message } = req.body;
+  const { name, email, phone, business, service, message } = req.body || {};
+  if ([name, email, phone, business, service, message].some(value =>
+    value != null && typeof value !== 'string')) {
+    return res.status(400).json({ errors: ['Form fields must be text.'] });
+  }
 
   // ── Validation
   const errors = [];
@@ -151,16 +160,30 @@ router.post('/', leadLimit, async (req, res) => {
     _ip:      req.ip,
   };
 
-  // ── AI qualification (non-blocking)
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    return res.status(503).json({
+      success: false,
+      error: 'The inquiry form is temporarily unavailable. Please email Leadscout@Scoutconsultatory.com directly.',
+    });
+  }
+
+  // ── Optional AI qualification
   let qualification = null;
   try {
     qualification = await qualifyLead(leadData);
   } catch (_) {}
 
-  // ── Email notification (non-blocking)
-  sendLeadEmail(leadData, qualification).catch(err =>
-    console.error('[EMAIL ERROR]', err.message)
-  );
+  // Wait for transport acceptance before reporting success. Do not retry here:
+  // a connection failure can leave acceptance uncertain and retrying may duplicate mail.
+  try {
+    await sendLeadEmail(leadData, qualification);
+  } catch (err) {
+    console.error('[EMAIL ERROR]', err.code || 'MAIL_ACCEPTANCE_UNCONFIRMED');
+    return res.status(502).json({
+      success: false,
+      error: 'We could not confirm that your inquiry was accepted for sending. Your entries are still here. Please email Leadscout@Scoutconsultatory.com directly.',
+    });
+  }
 
   // ── Log to console / could write to DB here
   console.log('[LEAD]', {
@@ -172,7 +195,8 @@ router.post('/', leadLimit, async (req, res) => {
 
   res.json({
     success:  true,
-    message:  "Got it — I'll be in touch soon.",
+    message:  'Your inquiry was accepted for sending. This does not confirm inbox delivery.',
+    submissionStatus: 'accepted_for_sending',
     qualification: qualification ? {
       score:    qualification.score,
       category: qualification.category,

@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ══ NAVIGATION ════════════════════════════════════════════ -->
   <nav class="nav" id="nav">
@@ -45,18 +46,19 @@
       <a href="/" class="nav__logo" aria-label="Scout Consultatory — Home">
         <img src="/images/scout-logo-primary.svg" alt="Scout Consultatory" class="nav__logo-img" />
       </a>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+      <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
         <li><a href="/services.html">Services</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="https://scoutconsultatory.substack.com/" target="_blank" rel="noopener">Insights</a></li>
-        <li><a href="/contact.html" class="btn btn--sm btn--primary">Get Your Scout Report</a></li>
+        <li><a href="/contact.html?service=Scout%20Report" class="btn btn--sm btn--primary">Request a Scout Report</a></li>
       </ul>
     </div>
   </nav>
 
+  <main id="main" tabindex="-1">
   <!-- ══ HERO ══════════════════════════════════════════════════ -->
   <section class="hero" id="home">
     <div class="hero__bg"></div>
@@ -68,13 +70,13 @@
           Actually Broken.
         </h1>
         <p class="hero__sub">
-          Scout Consultatory uses structured methodology and diagnostic analysis to trace
-          operational inefficiencies and compliance gaps back to their root cause —
-          then builds the fix that holds.
+          Scout Consultatory reviews your operations, identifies compliance gaps, and finds
+          what is causing recurring problems. Start with a Scout Report: written findings
+          and a prioritized plan for what to fix.
         </p>
         <div class="hero__actions">
-          <a href="/contact.html" class="btn btn--primary btn--lg">Get Your Scout Report</a>
-          <a href="/services.html" class="btn btn--ghost btn--lg">See How It Works</a>
+          <a href="/contact.html?service=Scout%20Report" class="btn btn--primary btn--lg">Request a Scout Report</a>
+          <a href="/services.html#scout-report" class="btn btn--ghost btn--lg">See How It Works</a>
         </div>
         <div class="hero__stats">
           <div class="stat"><span class="stat__num">Audit</span><span class="stat__label">Root Cause</span></div>
@@ -94,7 +96,7 @@
         <span class="overline">The ACE Framework</span>
         <h2>A Methodology Built Around Root Cause.</h2>
         <div class="accent-rule"></div>
-        <p>Most consultants arrive with a checklist. Scout arrives with a structured diagnostic process. The ACE Framework — Audit, Compliance, Efficacy — is how we find what's broken, trace it to source, and build the fix that holds.</p>
+        <p>The ACE Framework connects three questions: how does your business operate, where are the compliance gaps, and are your processes producing results?</p>
       </div>
       <div class="problems__grid">
         <div class="problem-card problem-card--accent">
@@ -154,7 +156,7 @@
         <div class="risk__block-cta">
           <h3>The Scout Report starts at $750.</h3>
           <p>A complete audit of your operations, compliance posture, and process efficacy — delivered as a prioritized findings report and remediation roadmap.</p>
-          <a href="/contact.html" class="btn btn--primary btn--lg">Get Your Scout Report →</a>
+          <a href="/contact.html?service=Scout%20Report" class="btn btn--primary btn--lg">Request a Scout Report →</a>
         </div>
       </div>
     </div>
@@ -193,6 +195,8 @@
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
   <footer class="footer">

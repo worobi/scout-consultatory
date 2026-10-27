@@ -22,6 +22,7 @@
   <link rel="stylesheet" href="/css/style.css" />
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- ══ NAVIGATION ════════════════════════════════════════════ -->
   <nav class="nav" id="nav">
@@ -29,18 +30,19 @@
       <a href="/" class="nav__logo" aria-label="Scout Consultatory — Home">
         <img src="/images/scout-logo-primary.svg" alt="Scout Consultatory" class="nav__logo-img" />
       </a>
-      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu">
+      <button class="nav__toggle" id="navToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
         <span></span><span></span><span></span>
       </button>
       <ul class="nav__links" id="navLinks">
         <li><a href="/services.html">Services</a></li>
         <li><a href="/about.html">About</a></li>
         <li><a href="https://scoutconsultatory.substack.com/" target="_blank" rel="noopener">Insights</a></li>
-        <li><a href="/contact.html" class="btn btn--sm btn--primary">Get Your Scout Report</a></li>
+        <li><a href="/contact.html?service=Scout%20Report" class="btn btn--sm btn--primary">Request a Scout Report</a></li>
       </ul>
     </div>
   </nav>
 
+  <main id="main" tabindex="-1">
   <!-- ══ PAGE HEADER ════════════════════════════════════════════ -->
   <header class="page-header">
     <div class="container">
@@ -50,6 +52,36 @@
     </div>
   </header>
 
+  <!-- ══ SCOUT REPORT SPOTLIGHT ════════════════════════════════ -->
+  <section class="services" id="scout-report" style="background:var(--bg-3);border-top:1px solid var(--border-dim);">
+    <div class="container">
+      <div class="section-header">
+        <span class="overline">Entry Point</span>
+        <h2>The Scout Report</h2>
+        <div class="accent-rule"></div>
+        <p>A written review of your operations and compliance gaps, available on its own or as the starting point for further work.</p>
+      </div>
+      <div class="scout-report-grid">
+        <div class="service-card service-card--wide">
+          <div class="service-card__label">What Is It?</div>
+          <p>A structured review of your operations using proven analytical methodology — the same frameworks applied in enterprise consulting, scaled for businesses of any size. We map your workflows, scan for compliance gaps, and trace inefficiencies back to their root cause.</p>
+          <p class="service-card__price">$750 – $1,500 &nbsp;·&nbsp; One-time &nbsp;·&nbsp; No engagement commitment required</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__label">What You Get</div>
+          <p>A written findings report: root cause context for every issue, a prioritized remediation roadmap, and plain-language recommendations. Yours to keep, share, or act on — with us or on your own.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-card__label">Works in Any Industry</div>
+          <p>Healthcare, logistics, retail, construction, professional services, property management — the framework adapts to what applies in your space. No generic checklists.</p>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:2.5rem;">
+        <a href="/contact.html?service=Scout%20Report" class="btn btn--primary btn--lg">Request a Scout Report →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ══ ACE FRAMEWORK (FULL) ══════════════════════════════════ -->
   <section class="problems" id="ace">
     <div class="container">
@@ -57,7 +89,7 @@
         <span class="overline">The ACE Framework</span>
         <h2>A Methodology Built Around Root Cause.</h2>
         <div class="accent-rule"></div>
-        <p>Most consultants arrive with a checklist. Scout arrives with a structured diagnostic process. The ACE Framework — Audit, Compliance, Efficacy — is how we find what's broken, trace it to source, and build the fix that holds.</p>
+        <p>The ACE Framework connects three questions: how does your business operate, where are the compliance gaps, and are your processes producing results?</p>
       </div>
       <div class="problems__grid">
         <div class="problem-card problem-card--accent">
@@ -116,36 +148,6 @@
     </div>
   </section>
 
-  <!-- ══ SCOUT REPORT SPOTLIGHT ════════════════════════════════ -->
-  <section class="services" id="scout-report" style="background:var(--bg-3);border-top:1px solid var(--border-dim);">
-    <div class="container">
-      <div class="section-header">
-        <span class="overline">Entry Point</span>
-        <h2>The Scout Report</h2>
-        <div class="accent-rule"></div>
-        <p>The starting point for every engagement — and a product you can buy on its own, no strings attached.</p>
-      </div>
-      <div class="scout-report-grid">
-        <div class="service-card service-card--wide">
-          <div class="service-card__label">What Is It?</div>
-          <p>A structured review of your operations using proven analytical methodology — the same frameworks applied in enterprise consulting, scaled for businesses of any size. We map your workflows, scan for compliance gaps, and trace inefficiencies back to their root cause.</p>
-          <p class="service-card__price">$750 – $1,500 &nbsp;·&nbsp; One-time &nbsp;·&nbsp; No engagement commitment required</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__label">What You Get</div>
-          <p>A written findings report: root cause context for every issue, a prioritized remediation roadmap, and plain-language recommendations. Yours to keep, share, or act on — with us or on your own.</p>
-        </div>
-        <div class="service-card">
-          <div class="service-card__label">Works in Any Industry</div>
-          <p>Healthcare, logistics, retail, construction, professional services, property management — the framework adapts to what applies in your space. No generic checklists.</p>
-        </div>
-      </div>
-      <div style="text-align:center;margin-top:2.5rem;">
-        <a href="/contact.html" class="btn btn--primary btn--lg">Order Your Scout Report →</a>
-      </div>
-    </div>
-  </section>
-
   <!-- ══ SERVICE TIERS ═════════════════════════════════════════ -->
   <section class="tiers" id="tiers">
     <div class="container">
@@ -167,7 +169,7 @@
             <li>Tech tool configuration</li>
           </ul>
           <p class="tier-price">$1,500 – $3,000</p>
-          <a href="/contact.html" class="btn btn--outline btn--sm">Inquire</a>
+          <a href="/contact.html?service=Tier%201%20Remediate" class="btn btn--outline btn--sm">Ask About Remediate</a>
         </div>
         <div class="tier-card tier-card--2 tier-card--featured">
           <div class="tier-card__badge">Tier 2</div>
@@ -181,7 +183,7 @@
             <li>Workflow automation</li>
           </ul>
           <p class="tier-price">$3,000 – $6,000</p>
-          <a href="/contact.html" class="btn btn--primary btn--sm">Inquire</a>
+          <a href="/contact.html?service=Tier%202%20Rebuild" class="btn btn--primary btn--sm">Ask About Rebuild</a>
         </div>
         <div class="tier-card tier-card--3">
           <div class="tier-card__badge">Tier 3</div>
@@ -194,14 +196,14 @@
             <li>Fractional CTO support</li>
           </ul>
           <p class="tier-price">$6,000+</p>
-          <a href="/contact.html" class="btn btn--outline btn--sm">Inquire</a>
+          <a href="/contact.html?service=Tier%203%20Transform" class="btn btn--outline btn--sm">Ask About Transform</a>
         </div>
       </div>
       <div class="tiers__options">
         <div class="tiers__option-item">
           <strong>Custom Solutions</strong>
           <span>Doesn't fit a tier? We scope it around what you actually need.</span>
-          <a href="/contact.html">Talk to Our Lead Scout →</a>
+          <a href="/contact.html?service=Custom%20Solutions">Talk to Our Lead Scout →</a>
         </div>
         <div class="tiers__option-divider"></div>
         <div class="tiers__option-item">
@@ -224,7 +226,7 @@
       <div class="how__steps">
         <div class="step">
           <div class="step__num">01</div>
-          <h3>Order a Scout Report</h3>
+          <h3>Request a Scout Report</h3>
           <p>Complete a short intake form. We review your operations using a structured diagnostic process tailored to your industry, then deliver a findings report with root cause analysis and a prioritized remediation roadmap.</p>
         </div>
         <div class="step__arrow">→</div>
@@ -241,10 +243,12 @@
         </div>
       </div>
       <div style="text-align:center;margin-top:3rem;">
-        <a href="/contact.html" class="btn btn--primary btn--lg">Start With a Scout Report →</a>
+        <a href="/contact.html?service=Scout%20Report" class="btn btn--primary btn--lg">Request a Scout Report →</a>
       </div>
     </div>
   </section>
+
+  </main>
 
   <!-- ══ FOOTER ═════════════════════════════════════════════════ -->
   <footer class="footer">
