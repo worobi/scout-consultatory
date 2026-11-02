@@ -85,7 +85,10 @@
 
   if (form) {
     const fields = form.elements;
-    const requestedService = new URLSearchParams(window.location.search).get('service');
+    const serviceParam = new URLSearchParams(window.location.search).get('service');
+    // Older tier links still lead to the simplified implementation inquiry.
+    const implementationAliases = ['Tier 1 Remediate', 'Tier 2 Rebuild', 'Tier 3 Transform', 'Custom Solutions'];
+    const requestedService = implementationAliases.includes(serviceParam) ? 'Implementation' : serviceParam;
     if (Array.from(fields.service.options).some(option => option.value === requestedService)) {
       fields.service.value = requestedService;
       fields.service.querySelectorAll('option').forEach(option => {
