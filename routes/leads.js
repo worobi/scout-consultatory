@@ -9,6 +9,12 @@ const nodemailer = require('nodemailer');
 const validator  = require('validator');
 const router     = express.Router();
 
+// Keep recipients server-controlled. Never accept a destination from the form.
+const recipients = Object.freeze({
+  sales: 'leadscout@scoutconsultatory.com',
+  support: 'sos@scoutconsultatory.com',
+});
+
 // ── Rate limit lead submissions ───────────────────────────────
 const leadLimit = rateLimit({
   windowMs: 60 * 60 * 1000,  // 1 hour
@@ -19,10 +25,15 @@ const leadLimit = rateLimit({
 
 // ── Email transporter ─────────────────────────────────────────
 function createTransporter() {
+  const port = Number(process.env.SMTP_PORT || 587);
+  if (!Number.isInteger(port) || port < 1 || port > 65535) {
+    throw new Error('Invalid mail transport port.');
+  }
   return nodemailer.createTransport({
     host:   process.env.SMTP_HOST || 'smtp.gmail.com',
-    port:   parseInt(process.env.SMTP_PORT) || 587,
-    secure: false,
+    port,
+    secure: port === 465,
+    requireTLS: port !== 465,
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
@@ -104,14 +115,24 @@ async function sendLeadEmail(data, qualification) {
 
   const result = await transport.sendMail({
     from:    `"Scout Consultatory Site" <${process.env.SMTP_USER}>`,
-    to:      process.env.NOTIFY_EMAIL || process.env.SMTP_USER,
-    subject: `New Lead: ${data.name} — ${qualification?.category || 'General Inquiry'}`,
+    to:      recipients[data.requestType],
+    replyTo: data.email,
+    subject: `${data.requestType === 'support' ? 'Support Request' : 'New Lead'}: ${data.name} — ${qualification?.category || 'General Inquiry'}`,
+    text: [
+      `Scout Consultatory ${data.requestType === 'support' ? 'support request' : 'sales inquiry'}`,
+      `Name: ${data.name}`,
+      `Email: ${data.email}`,
+      `Phone: ${data.phone || 'Not provided'}`,
+      `Business: ${data.business || 'Not provided'}`,
+      `Service: ${data.service || 'Not provided'}`,
+      '', data.message,
+    ].join('\n'),
     html: `
-      <h2 style="color:#1e3a5f;font-family:sans-serif;">New Lead from Scout Consultatory</h2>
+      <h2 style="color:#1e3a5f;font-family:sans-serif;">${data.requestType === 'support' ? 'Support Request' : 'New Lead'} from Scout Consultatory</h2>
       ${qualHtml}
       <table style="font-family:sans-serif;font-size:14px;border-collapse:collapse;width:100%;">
         <tr><td style="padding:8px;color:#666;width:120px;">Name</td><td style="padding:8px;font-weight:600;">${data.name}</td></tr>
-        <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;">Email</td><td style="padding:8px;"><a href="mailto:${data.email}">${data.email}</a></td></tr>
+        <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;">Email</td><td style="padding:8px;">${validator.escape(data.email)}</td></tr>
         <tr><td style="padding:8px;color:#666;">Phone</td><td style="padding:8px;">${data.phone || '—'}</td></tr>
         <tr style="background:#f9f9f9"><td style="padding:8px;color:#666;">Business</td><td style="padding:8px;">${data.business || '—'}</td></tr>
         <tr><td style="padding:8px;color:#666;">Service</td><td style="padding:8px;">${data.service || '—'}</td></tr>
@@ -122,7 +143,8 @@ async function sendLeadEmail(data, qualification) {
     `,
   });
   // SMTP acceptance only: this does not establish inbox delivery or reading.
-  if (!Array.isArray(result?.accepted) || result.accepted.length === 0) {
+  if (!Array.isArray(result?.accepted) || !result.accepted.some(address =>
+    String(address).toLowerCase() === recipients[data.requestType])) {
     throw new Error('Mail transport did not confirm an accepted recipient.');
   }
   return result;
@@ -130,16 +152,17 @@ async function sendLeadEmail(data, qualification) {
 
 // ── Route: POST /api/leads ────────────────────────────────────
 router.post('/', leadLimit, async (req, res) => {
-  const { name, email, phone, business, service, message } = req.body || {};
-  if ([name, email, phone, business, service, message].some(value =>
+  const { name, email, phone, business, service, message, requestType = 'sales' } = req.body || {};
+  if ([name, email, phone, business, service, message, requestType].some(value =>
     value != null && typeof value !== 'string')) {
     return res.status(400).json({ errors: ['Form fields must be text.'] });
   }
 
   // ── Validation
   const errors = [];
+  if (!Object.hasOwn(recipients, requestType))     errors.push('Choose a sales inquiry or support request.');
   if (!name    || name.trim().length < 2)         errors.push('Name is required.');
-  if (!email   || !validator.isEmail(email))       errors.push('Valid email is required.');
+  if (!email   || !validator.isEmail(email.trim())) errors.push('Valid email is required.');
   if (!message || message.trim().length < 10)      errors.push('Message must be at least 10 characters.');
   if (name     && name.length > 100)               errors.push('Name too long.');
   if (message  && message.length > 2000)           errors.push('Message too long (max 2000 chars).');
@@ -151,8 +174,10 @@ router.post('/', leadLimit, async (req, res) => {
   }
 
   const leadData = {
+    requestType,
     name:     validator.escape(name.trim()),
-    email:    validator.normalizeEmail(email),
+    // Preserve the submitter's address and any plus tag for CRM replies.
+    email:    email.trim(),
     phone:    phone    ? validator.escape(phone.trim())    : null,
     business: business ? validator.escape(business.trim()) : null,
     service:  service  ? validator.escape(service.trim())  : null,
@@ -163,15 +188,18 @@ router.post('/', leadLimit, async (req, res) => {
   if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
     return res.status(503).json({
       success: false,
-      error: 'The inquiry form is temporarily unavailable. Please email Leadscout@Scoutconsultatory.com directly.',
+      error: `The form is temporarily unavailable. Please email ${recipients[requestType]} directly.`,
     });
   }
 
-  // ── Optional AI qualification
+  // Preserve existing lead qualification; operators can disable it for routing tests.
+  // Support requests are helpdesk messages and never use lead qualification.
   let qualification = null;
-  try {
-    qualification = await qualifyLead(leadData);
-  } catch (_) {}
+  if (requestType === 'sales' && process.env.LEAD_QUALIFICATION_ENABLED !== 'false') {
+    try {
+      qualification = await qualifyLead(leadData);
+    } catch (_) {}
+  }
 
   // Wait for transport acceptance before reporting success. Do not retry here:
   // a connection failure can leave acceptance uncertain and retrying may duplicate mail.
@@ -181,7 +209,7 @@ router.post('/', leadLimit, async (req, res) => {
     console.error('[EMAIL ERROR]', err.code || 'MAIL_ACCEPTANCE_UNCONFIRMED');
     return res.status(502).json({
       success: false,
-      error: 'We could not confirm that your inquiry was accepted for sending. Your entries are still here. Please email Leadscout@Scoutconsultatory.com directly.',
+      error: `We could not confirm that your request was accepted for sending. Your entries are still here. Please email ${recipients[requestType]} directly.`,
     });
   }
 
@@ -206,3 +234,4 @@ router.post('/', leadLimit, async (req, res) => {
 });
 
 module.exports = router;
+

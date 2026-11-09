@@ -85,6 +85,11 @@
 
   if (form) {
     const fields = form.elements;
+    const requestTypeParam = new URLSearchParams(window.location.search).get('type');
+    if (fields.requestType && requestTypeParam === 'support') {
+      fields.requestType.value = 'support';
+      fields.requestType.querySelector('option[value="support"]').defaultSelected = true;
+    }
     const serviceParam = new URLSearchParams(window.location.search).get('service');
     // Older tier links still lead to the simplified implementation inquiry.
     const implementationAliases = ['Tier 1 Remediate', 'Tier 2 Rebuild', 'Tier 3 Transform', 'Custom Solutions'];
@@ -112,6 +117,8 @@
       if (!form.reportValidity()) return;
       const btnText    = submitBtn.querySelector('.btn__text');
       const btnSpinner = submitBtn.querySelector('.btn__spinner');
+      const requestType = fields.requestType?.value || 'sales';
+      const contactEmail = requestType === 'support' ? 'sos@scoutconsultatory.com' : 'leadscout@scoutconsultatory.com';
 
       btnText.textContent = 'Sending…';
       btnSpinner.hidden   = false;
@@ -123,6 +130,7 @@
           method:  'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
+            requestType,
             name:     fields.name.value.trim(),
             email:    fields.email.value.trim(),
             phone:    fields.phone.value.trim(),
@@ -131,11 +139,11 @@
             message:  fields.message.value.trim(),
           }),
         });
-        const data = await res.json().catch(() => ({ error: 'Unable to confirm your inquiry. Please try again or email Leadscout@Scoutconsultatory.com.' }));
+        const data = await res.json().catch(() => ({ error: `Unable to confirm your request. Your entries are still here. Please email ${contactEmail} before submitting again.` }));
 
         if (res.ok && data.success) {
           formStatus.className   = 'form-status form-status--success';
-          formStatus.textContent = data.message || "Got it — I'll be in touch soon.";
+          formStatus.textContent = data.message || 'Your request was accepted for sending. This does not confirm inbox delivery.';
           form.reset();
         } else {
           formStatus.className   = 'form-status form-status--error';
@@ -145,7 +153,7 @@
         formStatus.focus();
       } catch (_) {
         formStatus.className   = 'form-status form-status--error';
-        formStatus.textContent = 'Network error. Please email Leadscout@Scoutconsultatory.com directly.';
+        formStatus.textContent = `We could not confirm whether your request was sent. Your entries are still here. Please email ${contactEmail} before submitting again.`;
         formStatus.hidden      = false;
         formStatus.focus();
       } finally {
@@ -157,3 +165,4 @@
   }
 
 })();
+

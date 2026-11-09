@@ -65,7 +65,12 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your@gmail.com
 SMTP_PASS=your-app-password    # Gmail: use App Password, not account password
-NOTIFY_EMAIL=Brandon@worobi.com
+# Form recipients are fixed in routes/leads.js:
+# sales -> leadscout@scoutconsultatory.com
+# support -> sos@scoutconsultatory.com
+# NOTIFY_EMAIL is no longer used by the website form.
+# Temporarily set false during routing tests to avoid AI calls.
+# LEAD_QUALIFICATION_ENABLED=false
 
 SITE_URL=https://scoutconsultatory.com
 NODE_ENV=production
@@ -142,6 +147,18 @@ sudo ufw status
 
 ## 8. Verify Deployment
 
+Run `npm test` before deployment. These tests mock mail transport and AI; they do
+not send mail or prove inbox delivery. Port 465 uses implicit TLS; other ports
+require STARTTLS. Invalid SMTP ports fail without attempting a send. Keep SMTP
+credentials in the existing private server configuration, never in this repo.
+
+Before a live routing test, use `LEAD_QUALIFICATION_ENABLED=false` for the test
+process or confirm that no AI keys are configured. Restore its previous setting
+after testing. Send only clearly labeled test inquiries, once each, and verify
+the resulting CRM lead or helpdesk ticket and its Reply-To address. An SMTP
+acceptance response is not proof of delivery. Do not automatically retry an
+uncertain send.
+
 ```bash
 # Health check
 curl https://scoutconsultatory.com/api/health
@@ -185,3 +202,4 @@ To switch the default AI provider at runtime without restart:
 - Or: users can switch providers live in the chat widget UI (GPT / Claude radio buttons)
 
 The system automatically falls back to the other provider if one fails.
+

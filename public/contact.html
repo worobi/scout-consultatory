@@ -49,7 +49,7 @@
     <div class="container">
       <span class="overline">Get Started</span>
       <h1>Tell Us What You Need</h1>
-      <p>Use this form to request a Scout Report or ask about a service. This is an inquiry, not a purchase.</p>
+      <p>Request a Scout Report, ask about a service, or get support. This is an inquiry, not a purchase.</p>
     </div>
   </header>
 
@@ -59,6 +59,14 @@
       <div class="contact__inner">
         <form class="contact-form" id="contactForm">
           <p class="form-help">Fields marked * are required.</p>
+          <div class="form-group">
+            <label for="requestType">How can we help? <span class="required">*</span></label>
+            <select id="requestType" name="requestType" required aria-describedby="requestTypeHelp">
+              <option value="sales">New project or service inquiry</option>
+              <option value="support">Help with an existing service</option>
+            </select>
+            <p id="requestTypeHelp" class="form-help">New inquiries go to our CRM. Existing-service requests go to our helpdesk. Do not include passwords or sensitive personal information.</p>
+          </div>
           <div class="form-row form-row--2">
             <div class="form-group">
               <label for="name">Name <span class="required">*</span></label>
@@ -110,7 +118,7 @@
             </button>
           </div>
           <div id="formStatus" class="form-status" role="status" aria-live="polite" aria-atomic="true" tabindex="-1" hidden></div>
-        <noscript><p>Please enable JavaScript to use this form, or email <a href="mailto:Leadscout@Scoutconsultatory.com">Leadscout@Scoutconsultatory.com</a>.</p></noscript>
+        <noscript><p>Please enable JavaScript to use this form, or email <a href="mailto:leadscout@scoutconsultatory.com">leadscout@scoutconsultatory.com</a> for new inquiries or <a href="mailto:sos@scoutconsultatory.com">sos@scoutconsultatory.com</a> for support.</p></noscript>
         </form>
         <div class="contact__info">
           <h3>Direct Contact</h3>
@@ -118,6 +126,8 @@
             Leadscout@Scoutconsultatory.com
           </a>
           <p class="contact__note">Reach out directly to our Lead Scout. Responses within 24 hours, usually same-day.</p>
+          <h3>Existing-service support</h3>
+          <a href="mailto:sos@scoutconsultatory.com" class="contact__link">sos@scoutconsultatory.com</a>
           <div class="contact__divider"></div>
 
           <h3>Connect</h3>
@@ -169,6 +179,7 @@
     </div>
   </footer>
 
-  <script src="/js/main.js?v=whitegold20261102"></script>
+  <script src="/js/main.js?v=form-routing20261109"></script>
 </body>
 </html>
+
