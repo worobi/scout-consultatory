@@ -114,13 +114,13 @@ async function sendLeadEmail(data, qualification) {
     </div>` : '';
 
   const result = await transport.sendMail({
-    from:    `"Scout Consultatory Site" <${process.env.SMTP_USER}>`,
+    from:    { name: data.namePlain, address: process.env.SMTP_USER },
     to:      recipients[data.requestType],
-    replyTo: data.email,
-    subject: `${data.requestType === 'support' ? 'Support Request' : 'New Lead'}: ${data.name} — ${qualification?.category || 'General Inquiry'}`,
+    replyTo: { name: data.namePlain, address: data.email },
+    subject: `${data.requestType === 'support' ? 'Support Request' : 'New Lead'}: ${data.namePlain} — ${qualification?.category || 'General Inquiry'}`,
     text: [
       `Scout Consultatory ${data.requestType === 'support' ? 'support request' : 'sales inquiry'}`,
-      `Name: ${data.name}`,
+      `Name: ${data.namePlain}`,
       `Email: ${data.email}`,
       `Phone: ${data.phone || 'Not provided'}`,
       `Business: ${data.business || 'Not provided'}`,
@@ -164,6 +164,7 @@ router.post('/', leadLimit, async (req, res) => {
   if (!name    || name.trim().length < 2)         errors.push('Name is required.');
   if (!email   || !validator.isEmail(email.trim())) errors.push('Valid email is required.');
   if (!message || message.trim().length < 10)      errors.push('Message must be at least 10 characters.');
+  if (name && /[\u0000-\u001f\u007f]/.test(name)) errors.push('Name cannot include control characters.');
   if (name     && name.length > 100)               errors.push('Name too long.');
   if (message  && message.length > 2000)           errors.push('Message too long (max 2000 chars).');
   if (phone    && !validator.isMobilePhone(phone, 'any', { strictMode: false }))
@@ -175,6 +176,7 @@ router.post('/', leadLimit, async (req, res) => {
 
   const leadData = {
     requestType,
+    namePlain: name.trim(),
     name:     validator.escape(name.trim()),
     // Preserve the submitter's address and any plus tag for CRM replies.
     email:    email.trim(),

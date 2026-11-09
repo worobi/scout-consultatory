@@ -1,0 +1,9 @@
+.support-section { padding-top: 3.5rem; }
+.support-form { padding: 2rem; border: 1px solid var(--border-dim); border-top: 3px solid var(--gold); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow); min-width: 0; }
+.support-form h2 { margin: .4rem 0 .75rem; font-size: 1.8rem; }
+.support-form .form-help a, .support-aside p a { text-decoration: underline; text-underline-offset: 3px; }
+.support-aside h2 { margin: .4rem 0 1rem; font-size: 1.5rem; }
+.support-checklist { padding-left: 1.1rem; list-style: disc; color: var(--text-muted); font-size: .9rem; }
+.support-checklist li + li { margin-top: .6rem; }
+.support-form :disabled { cursor: wait; }
+@media (max-width: 768px) { .support-form { padding: 1.4rem; } .support-section { padding-top: 2rem; } }

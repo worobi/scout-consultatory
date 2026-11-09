@@ -61,7 +61,7 @@ test('legacy/default inquiry goes only to approved CRM with intact Reply-To', as
   assert.equal(r.body.submissionStatus, 'accepted_for_sending');
   assert.equal(h.sent.length, 1);
   assert.equal(h.sent[0].to, 'leadscout@scoutconsultatory.com');
-  assert.equal(h.sent[0].replyTo, valid.email);
+  assert.equal(h.sent[0].replyTo.address, valid.email);
   assert.equal(h.aiLoads, 0);
 });
 
@@ -147,5 +147,35 @@ test('message HTML is escaped and email preserves plus-tag reply routing', async
   await h.submit({ ...valid, message: '<img src=x onerror=alert(1)> test content' });
   assert.doesNotMatch(h.sent[0].html, /<img/);
   assert.match(h.sent[0].html, /&lt;img/);
-  assert.equal(h.sent[0].replyTo, valid.email);
+  assert.equal(h.sent[0].replyTo.address, valid.email);
+});
+
+test('visitor name remains plain in structured headers and escaped in HTML', async () => {
+  const name = 'Alex "AJ" O\'Neil & <Co>';
+  const h = harness();
+  await h.submit({ ...valid, name, requestType: 'support' });
+  const mail = h.sent[0];
+  assert.equal(mail.from.name, name);
+  assert.equal(mail.from.address, 'website@example.com');
+  assert.equal(mail.replyTo.name, name);
+  assert.equal(mail.replyTo.address, valid.email);
+  assert.match(mail.text, /Alex "AJ" O'Neil & <Co>/);
+  assert.doesNotMatch(mail.html, /<Co>/);
+  assert.match(mail.html, /&amp; &lt;Co&gt;/);
+  assert.ok(mail.subject.includes(name));
+  // Compile to MIME in memory only, never establish an SMTP connection.
+  const nodemailer = require('nodemailer');
+  const result = await nodemailer.createTransport({ streamTransport: true, buffer: true, newline: 'unix' }).sendMail(mail);
+  const mime = result.message.toString();
+  assert.match(mime, /From: "Alex \\"AJ\\" O'Neil & <Co>" <website@example.com>/);
+  assert.match(mime, /Reply-To: "Alex \\"AJ\\" O'Neil & <Co>"/);
+  assert.match(mime, /Case.Name\+crm@gmail.com/);
+});
+test('control characters in display names fail before any send', async () => {
+  for (const name of ['Test\r\nBcc: other@example.com', 'Test\nName', 'Test\tName', 'Test\u0000Name', 'Test\u007fName']) {
+    const h = harness();
+    const r = await h.submit({ ...valid, name });
+    assert.equal(r.status, 400);
+    assert.equal(h.sent.length, 0);
+  }
 });
